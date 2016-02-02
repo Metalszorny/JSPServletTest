@@ -1,0 +1,471 @@
+CREATE DATABASE JSPServletTestDatabase;
+
+
+USE JSPServletTestDatabase;
+CREATE TABLE Workplaces
+(
+Id int(10) NOT NULL PRIMARY KEY,
+Name varchar(50) NOT NULL,
+IsDeleted tinyint(1) NOT NULL
+);
+
+USE JSPServletTestDatabase;
+CREATE TABLE Employees
+(
+Id int(10) NOT NULL PRIMARY KEY,
+Name varchar(50) NOT NULL,
+Email varchar(50),
+IsDeleted tinyint(1) NOT NULL
+);
+
+USE JSPServletTestDatabase;
+CREATE TABLE Relations
+(
+Id int(10) PRIMARY KEY,
+Employee int(10) NOT NULL,
+Workplace int(10) NOT NULL,
+FOREIGN KEY (Employee) REFERENCES Employees(Id),
+FOREIGN KEY (Workplace) REFERENCES Workplaces(Id)
+);
+
+
+INSERT INTO JSPServletTestDatabase.Workplaces (Id, Name, IsDeleted) VALUES (1, 'Digital Media Experience', 0);
+
+INSERT INTO JSPServletTestDatabase.Employees (Id, Name, Email, IsDeleted) VALUES (1, 'Kis Pista', 'pista.kis@mediaux.biz', 0);
+
+INSERT INTO JSPServletTestDatabase.Relations (Id, Employee, Workplace) VALUES (1, 1, 1);
+
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spListRelations`;
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spListRelations` ()
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Workplaces;
+END$$
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spListEmployees`;
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spListEmployees` ()
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Employees;
+END$$
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spListRelations`;
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spListRelations` ()
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Relations;
+
+END$$
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spAddWorkplace`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spAddWorkplace` (IN idValue int(10), IN nameValue varchar(50), IN isdeletedValue tinyint(1))
+
+BEGIN
+
+	INSERT INTO JSPServletTestDatabase.Workplaces (Id, Name, IsDeleted) Values (idValue, nameValue, isdeletedValue);
+
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spAddRelation`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `spAddRelation`(IN idValue int(10), IN employeeValue int(10), IN workplaceValue int(10))
+
+BEGIN
+
+	INSERT INTO JSPServletTestDatabase.Relations (Id, Employee, Workplace) Values (idValue, employeeValue, workplaceValue);
+
+END$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spAddWorkplace`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spAddWorkplace` (IN idValue int(10), IN employeeValue int(10), IN workplaceValue int(10))
+
+BEGIN
+
+	INSERT INTO JSPServletTestDatabase.Relations (Id, Employee, Workplace) Values (idValue, employeeValue, workplaceValue);
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spEditWorkplace`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spEditWorkplace` (IN idValue int(10), IN nameValue varchar(50))
+
+BEGIN
+
+	UPDATE JSPServletTestDatabase.Workplaces SET Name = nameValue WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spEditEmployee`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spEditEmployee` (IN idValue int(10), IN nameValue varchar(50), IN emailValue varchar(50))
+
+BEGIN
+
+	UPDATE JSPServletTestDatabase.Employees SET Name = nameValue, Email = emailValue WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spEditRelation`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spEditRelation` (IN idValue int(10), IN workplaceValue int(10), IN employeeValue int(10))
+
+BEGIN
+
+	UPDATE JSPServletTestDatabase.Relations SET Employee = employeeValue, Workplace = workplaceValue WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spDeleteWorkplace`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spDeleteWorkplace` (IN idValue int(10))
+
+BEGIN
+
+	UPDATE JSPServletTestDatabase.Workplaces SET IsDeleted = 1 WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spDeleteEmployee`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spDeleteEmployee` (IN idValue int(10))
+
+BEGIN
+
+	UPDATE JSPServletTestDatabase.Employees SET IsDeleted = 1 WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spDeleteRelation`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spDeleteRelation` (IN idValue int(10))
+
+BEGIN
+
+	DELETE FROM JSPServletTestDatabase.Relations WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindEmployeeById`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindEmployeeById` (IN idValue int(10))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Employees WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindWorkplaceById`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindWorkplaceById` (IN idValue int(10))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Workplaces WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindRelationById`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindRelationById` (IN idValue int(10))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Relations WHERE Id = idValue;
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindWorkplaceByName`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindWorkplaceByName` (IN nameValue varchar(50))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Workplaces WHERE Name LIKE CONCAT('%', nameValue, '%');
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindEmployeeByName`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindEmployeeByName` (IN nameValue varchar(50))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Employees WHERE Name LIKE CONCAT('%', nameValue, '%');
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindEmployeeByEmail`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindEmployeeByEmail` (IN emailValue varchar(50))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Employees WHERE Email LIKE CONCAT('%', emailValue, '%');
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindEmployeeByNameAndEmail`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindEmployeeByNameAndEmail` (IN nameValue varchar(50), IN emailValue varchar(50))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Employees WHERE Email LIKE CONCAT('%', emailValue, '%') AND Name LIKE CONCAT('%', nameValue, '%');
+
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindRelationByEmployee`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindRelationByEmployee` (IN employeeValue int(10))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Relations WHERE Employee LIKE CONCAT('%', employeeValue, '%');
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindRelationByWorkplace`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindRelationByWorkplace` (IN workplaceValue int(10))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Relations WHERE Workplace LIKE CONCAT('%', workplaceValue, '%');
+END
+$$
+
+
+DELIMITER ;
+
+USE `jspservlettestdatabase`;
+
+DROP procedure IF EXISTS `spFindRelationByEmployeeAndWorkplace`;
+
+
+DELIMITER $$
+
+USE `jspservlettestdatabase`$$
+
+CREATE PROCEDURE `spFindRelationByEmployeeAndWorkplace` (IN employeeValue int(10), IN workplaceValue int(10))
+
+BEGIN
+
+	SELECT * FROM JSPServletTestDatabase.Relations WHERE Workplace LIKE CONCAT('%', workplaceValue, '%') AND Employee LIKE CONCAT('%', employeeValue, '%');
+END
+$$
+
+
+DELIMITER ;
