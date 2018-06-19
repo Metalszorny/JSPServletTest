@@ -1,10 +1,9 @@
-# JSPServletTest
-================
+# JSPServletTestInJava
 
 
 About:
 ------
-An JSP and Servlet test web application. It uses List, Add, Edit, Logical & Phisical Delete and Find functions on an Employees, Workplaces and Relations database.
+A JSP and Servlet test web application. It uses List, Add, Edit, Logical & Phisical Delete and Find functions on an Employees, Workplaces and Relations database.
 
 
 Used languages:
